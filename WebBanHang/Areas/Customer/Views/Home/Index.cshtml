@@ -1,0 +1,106 @@
+﻿<partial name="_Notification" />
+<div class="container" style="margin-top:30px">
+    <div class="row">
+        <div class="col-sm-4">
+            <h2>
+                TITLE HEADING
+                
+            </h2>
+            <div class="fakeimg">
+                Fake Image<br />
+                <img src="~/HinhanhSP/giphy.gif" class="img-responsive" style="height:300px;height:300px" />
+            </div>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-sm-8">
+            <h2> About Me</h2>
+            <h5>Title description, Dec 7, 2024</h5>
+            <div class="fakeimg">Fake Image</div>
+            <p>Một số giới thiệu về sản phẩm và đặc quyền chính sách bảo hành tại cửa hàng.</p>
+
+            <p>
+                Nestled in the heart of the bustling market, the fish shop is a vibrant oasis 
+                of fresh ocean treasures. As you step inside, the air is filled with the briny scent of the sea, 
+                mingling with the aromatic spices that promise delicious meals. The display is a colorful array 
+                of glistening fish, from shimmering salmon to sleek mackerel, each one carefully arranged on beds of 
+                crushed ice. Knowledgeable fishmongers greet customers with warm smiles, ready to share tips on the best 
+                cooking methods or the freshest catches of the day. With every visit, the shop becomes not just a place to 
+                buy seafood, but a community hub where 
+                recipes are exchanged, and culinary adventures begin.
+            </p>
+            <p>
+                Echo Park:sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 26/7/2004 sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit,
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco. SITE BHD STAR VINCOM THAO DIEN. star of the month: IN RECOGNTION OF YOUR EFFORT, RESULTING IN A HIGH LEVEL OF PERFORMANCE & CUSTOMER SERVICE IN MAY 2023...
+            </p>
+            <p> Là Memnber của cửa hàng sẽ được áp dụng giảm giá đặc quyền của cửa hàng và những phần quà chương trình từ cửa hàng. </p>
+            <h6> Đăng Ký hoặc Đăng nhập khi mua hàng để nhận nhiều ưu đãi từ PinkFish.</h6>
+        </div>
+    </div>
+</div>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var p in Model)
+            {
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Sale badge-->
+                        <div class="badge bg-success text-pink  position-absolute" style="top: 0.5rem; right: 0.5rem">outstanding</div>
+                        <!-- Product image-->
+                        @if (string.IsNullOrEmpty(p.ImageUrl))
+                        {
+                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                        }
+                        else
+                        {
+                            <img class="card-img-top" src="/@p.ImageUrl" alt="..." />
+                        }
+
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">@p.Name</h5>
+                                <!-- Product reviews-->
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                </div>
+                                <!-- Product price-->
+                                <span class="text-muted">@Html.FormatValue(p.Price, "${0:#,##0}")</span>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="addtocart btn btn-outline-success mt-auto" data-productId="@p.Id" asp-action="AddToCart" asp-controller="Cart" asp-route-productId="@p.Id">
+                                 Buy
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+<div>
+    <ul class="pagination justify-content-center">
+        <li class="page-item  @(ViewBag.pageIndex == 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-page="1">&laquo;</a>
+        </li>
+        @for (var i = 1; i <= ViewBag.pageSum; i++)
+        {
+            <li class="page-item  @(ViewBag.pageIndex == i ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@i"> @i </a>
+            </li>
+        }
+        <li class="page-item @(ViewBag.pageIndex == @ViewBag.pageSum ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-page="@ViewBag.pageSum">&raquo;</a>
+        </li>
+    </ul>
+</div>
